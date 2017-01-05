@@ -10,18 +10,42 @@
 <body>
 <div class="container">
     <h1>On The Subject Of Passwords</h1>
+    <table class="table table-bordered text-xs-center">
+        <tbody id="words_table">
+        </tbody>
+    </table>
 </div>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<!-- Tether -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"
+        integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8"
+        crossorigin="anonymous">
+</script>
 <!-- Bootstrap v4 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"
         integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK"
         crossorigin="anonymous"></script>
 <script>
     $(function () {
-
+        loadWords();
     });
+
+    function loadWords() {
+        $.getJSON("words.json", function (data) {
+            console.log(data);
+            var $words_table = $('#words_table');
+            var col_count = 5;
+            for (var i = 0; i < data.length / col_count; i++) {
+                var $tr = $('<tr>');
+                for (var j = 0; j < col_count; j++) {
+                    $tr.append($('<td>').text(data[i * col_count + j]));
+                }
+                $words_table.append($tr);
+            }
+        });
+    }
 </script>
 </body>
 </html>
