@@ -46,6 +46,30 @@
             }
         });
     }
+    });
+    function checkMatch(possibleLetters, checkWord) {
+        //可能出現的字母必須為陣列
+        if (!$.isArray(possibleLetters)) {
+            return false;
+        }
+        for (var i = 0; i < possibleLetters.length; i++) {
+            //可能出現的字母
+            var checkPossibleLetters = possibleLetters[i];
+            if (!checkPossibleLetters || checkPossibleLetters.length == 0) {
+                continue;
+            }
+            //檢查的字母
+            var checkLetter = checkWord[i];
+            if (checkLetter === undefined) {
+                return false;
+            }
+            //檢查該字母是否屬於可能出現的字母
+            if (checkPossibleLetters.indexOf(checkLetter) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 </script>
 </body>
 </html>
