@@ -34,7 +34,6 @@
 
     function loadWords() {
         $.getJSON("words.json", function (data) {
-            console.log(data);
             var $words_table = $('#words_table');
             var col_count = 5;
             for (var i = 0; i < data.length / col_count; i++) {
