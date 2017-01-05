@@ -14,6 +14,38 @@
         <tbody id="words_table">
         </tbody>
     </table>
+    <form>
+        <div class="form-group row">
+            <label for="letter-1-input" class="col-xs-2 col-form-label">Letter 1</label>
+            <div class="col-xs-10">
+                <input class="form-control" type="text" id="letter-1-input" style="text-transform:uppercase">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="letter-2-input" class="col-xs-2 col-form-label">Letter 2</label>
+            <div class="col-xs-10">
+                <input class="form-control" type="text" id="letter-2-input" style="text-transform:uppercase">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="letter-3-input" class="col-xs-2 col-form-label">Letter 3</label>
+            <div class="col-xs-10">
+                <input class="form-control" type="text" id="letter-3-input" style="text-transform:uppercase">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="letter-4-input" class="col-xs-2 col-form-label">Letter 4</label>
+            <div class="col-xs-10">
+                <input class="form-control" type="text" id="letter-4-input" style="text-transform:uppercase">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="letter-5-input" class="col-xs-2 col-form-label">Letter 5</label>
+            <div class="col-xs-10">
+                <input class="form-control" type="text" id="letter-5-input" style="text-transform:uppercase">
+            </div>
+        </div>
+    </form>
 </div>
 
 <!-- jQuery -->
@@ -30,6 +62,11 @@
 <script>
     $(function () {
         loadWords();
+        $('#letter-1-input').on('input', updateTable);
+        $('#letter-2-input').on('input', updateTable);
+        $('#letter-3-input').on('input', updateTable);
+        $('#letter-4-input').on('input', updateTable);
+        $('#letter-5-input').on('input', updateTable);
     });
 
     function loadWords() {
@@ -39,13 +76,32 @@
             for (var i = 0; i < data.length / col_count; i++) {
                 var $tr = $('<tr>');
                 for (var j = 0; j < col_count; j++) {
-                    $tr.append($('<td>').text(data[i * col_count + j]));
+                    $tr.append($('<td>').text(data[i * col_count + j].toLowerCase()).addClass("bg-success"));
                 }
                 $words_table.append($tr);
             }
         });
     }
 
+    function updateTable() {
+        var possibleLetters = [
+            $('#letter-1-input').val().toLowerCase(),
+            $('#letter-2-input').val().toLowerCase(),
+            $('#letter-3-input').val().toLowerCase(),
+            $('#letter-4-input').val().toLowerCase(),
+            $('#letter-5-input').val().toLowerCase()
+        ];
+        $.each($('#words_table').find('td'), function () {
+            var $this = $(this);
+            if (checkMatch(possibleLetters, $this.text())) {
+                $this.addClass("bg-success");
+            }
+            else {
+                $this.removeClass("bg-success");
+            }
+        });
+    }
+    
     function checkMatch(possibleLetters, checkWord) {
         //可能出現的字母必須為陣列
         if (!$.isArray(possibleLetters)) {
